@@ -876,20 +876,20 @@ int main(int argc, char **argv)
 		  evtscount[eviter]++;
 		}
 		if ((buf.pid == partpid2) && (partpid2 != 0)) {
-		  evbuf[eviter][evtscount2[eviter]].x = buf.x;
-		  evbuf[eviter][evtscount2[eviter]].y = buf.y;
-		  evbuf[eviter][evtscount2[eviter]].z = buf.z;
-		  evbuf[eviter][evtscount2[eviter]].t = buf.t;
-		  evbuf[eviter][evtscount2[eviter]].px = buf.px;
-		  evbuf[eviter][evtscount2[eviter]].py = buf.py;
-		  evbuf[eviter][evtscount2[eviter]].pz = buf.pz;
-		  evbuf[eviter][evtscount2[eviter]].e = buf.e;
-		  evbuf[eviter][evtscount2[eviter]].pid = buf.pid;
-		  evbuf[eviter][evtscount2[eviter]].fatherpid = buf.fatherpid;
-		  evbuf[eviter][evtscount2[eviter]].rootpid = buf.rootpid;
-		  evbuf[eviter][evtscount2[eviter]].mass = buf.mass;
-		  evbuf[eviter][evtscount2[eviter]].eventid = buf.eventid;
-		  evbuf[eviter][evtscount2[eviter]].eventweight = buf.eventweight;
+		  evbuf2[eviter][evtscount2[eviter]].x = buf.x;
+		  evbuf2[eviter][evtscount2[eviter]].y = buf.y;
+		  evbuf2[eviter][evtscount2[eviter]].z = buf.z;
+		  evbuf2[eviter][evtscount2[eviter]].t = buf.t;
+		  evbuf2[eviter][evtscount2[eviter]].px = buf.px;
+		  evbuf2[eviter][evtscount2[eviter]].py = buf.py;
+		  evbuf2[eviter][evtscount2[eviter]].pz = buf.pz;
+		  evbuf2[eviter][evtscount2[eviter]].e = buf.e;
+		  evbuf2[eviter][evtscount2[eviter]].pid = buf.pid;
+		  evbuf2[eviter][evtscount2[eviter]].fatherpid = buf.fatherpid;
+		  evbuf2[eviter][evtscount2[eviter]].rootpid = buf.rootpid;
+		  evbuf2[eviter][evtscount2[eviter]].mass = buf.mass;
+		  evbuf2[eviter][evtscount2[eviter]].eventid = buf.eventid;
+		  evbuf2[eviter][evtscount2[eviter]].eventweight = buf.eventweight;
 		  evtscount2[eviter]++;
 		}
 	      }
