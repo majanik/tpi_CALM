@@ -81,11 +81,11 @@ int genbod_drawNice2(const char* filename1, const char* filename2, bool ifSave =
     canv->cd(1);
     TH2D* corrB1 = (TH2D*) numB1->Clone();
     corrB1->Draw("surf1");
-    DrawNicely(corrB1, 0.7,2.4, first);//filename1);
+    DrawNicely(corrB1, 0.7,1.4, first);//filename1);
     canv->cd(2);
     TH2D* corrB2 = (TH2D*) numB2->Clone();
     corrB2->Draw("surf1");
-    DrawNicely(corrB2, 0.7,2.4, second);//filename2);
+    DrawNicely(corrB2, 0.7,1.4, second);//filename2);
     if(drawDifference){
       canv->cd(3);
       numB1->Divide(numB2);

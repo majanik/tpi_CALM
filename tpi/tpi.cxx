@@ -588,6 +588,28 @@ int main(int argc, char **argv)
       ExpCF3D *cf3datrue;
       ExpCF3D *cf3dactrue;
 
+      char pairname[20];
+      if(pairtype==0)
+	strcpy(pairname,"PipPip");
+      else if(pairtype==16)
+	strcpy(pairname,"PipPim");
+      else if(pairtype==22)
+	strcpy(pairname,"PimPim");
+      else if(pairtype==21)
+	strcpy(pairname,"Pi0Pi0");
+      else if(pairtype==1)
+	strcpy(pairname,"KpKp");
+      else if(pairtype==19)
+	strcpy(pairname,"KpKm");
+      else  if(pairtype==4)
+	strcpy(pairname,"PP");
+      else  if(pairtype==20)
+	strcpy(pairname,"aPaP");
+      else if(pairtype==17)
+	strcpy(pairname,"LL");
+      else
+	strcpy(pairname,"NoName");
+
       if ((pairtype == 0) || (pairtype == 1) || (pairtype == 10) || (pairtype == 12)) {
 	if (0) { // AuAu ranges
 	  // 3D cf for identical particle - all - pure quantum weight 
@@ -598,37 +620,37 @@ int main(int argc, char **argv)
 
 	if (1) { // pp ranges 
 	  // 3D cf for identical particle - all - pure quantum weight 
-	  cf3da  = new ExpCF3D("a", 81, -0.81, 0.81);
+	  cf3da  = new ExpCF3D(Form("a%s",pairname), 81, -0.81, 0.81);
 	  // 3D cf for identical particles - all - full weight
-	  cf3dac = new ExpCF3D("ac", 81, -0.81, 0.81);
+	  cf3dac = new ExpCF3D(Form("ac%s",pairname), 81, -0.81, 0.81);
       
 	  // 3D cf for identical particle - all - pure quantum weight 
-	  cf3datrue  = new ExpCF3D("atrue", 81, -0.81, 0.81);
+	  cf3datrue  = new ExpCF3D(Form("atrue%s",pairname), 81, -0.81, 0.81);
 	  // 3D cf for identical particles - all - full weight
-	  cf3dactrue = new ExpCF3D("actrue", 81, -0.81, 0.81);
+	  cf3dactrue = new ExpCF3D(Form("actrue%s",pairname), 81, -0.81, 0.81);
 	}
       }
       else {
 	// 3D cf for non-identical particle - all - pure quantum weight 
-	cf3da  = new ExpCF3D("a", 60, -0.2, 0.2);
+	cf3da  = new ExpCF3D(Form("a%s",pairname), 60, -0.2, 0.2);
 	// 3D cf for non-identical particles - all - full weight
-	cf3dac = new ExpCF3D("ac", 60, -0.2, 0.2);    
+	cf3dac = new ExpCF3D(Form("ac%s",pairname), 60, -0.2, 0.2);    
 
 	// 3D cf for non-identical particle - all - pure quantum weight 
-	cf3datrue  = new ExpCF3D("at", 60, -0.2, 0.2);
+	cf3datrue  = new ExpCF3D(Form("at%s",pairname), 60, -0.2, 0.2);
 	// 3D cf for non-identical particles - all - full weight
-	cf3dactrue = new ExpCF3D("act", 60, -0.2, 0.2);    
+	cf3dactrue = new ExpCF3D(Form("act%s",pairname), 60, -0.2, 0.2);    
       }
 
-      ExpCF1D *cf1da = new ExpCF1D("1da",200,0.0,0.8);
-      ExpCF1D *cf1dp = new ExpCF1D("1dp",200,0.0,0.8);
-      ExpCF1D *cf1datrue = new ExpCF1D("1datrue",200,0.0,0.8);
+      ExpCF1D *cf1da = new ExpCF1D(Form("1da%s",pairname),200,0.0,0.8);
+      ExpCF1D *cf1dp = new ExpCF1D(Form("1dp%s",pairname),200,0.0,0.8);
+      ExpCF1D *cf1datrue = new ExpCF1D(Form("1datrue%s",pairname),200,0.0,0.8);
   
-      hbetat = new TH1D("hbetat", "hbetat", 100, 0.0, 1.0);
-      hkt    = new TH1D("hkt",    "hkt"   , 100, 0.0, 1.2);
-      hevmult = new TH1D("hevmult","hevmult",1001,-0.5,1000.5);
-      hevmultAll = new TH1D("hevmultAll","hevmultAll",1001,-0.5,1000.5);
-      hevmultPID = new TH2F("hevmultPID","hevmultPID",11,0,11,51,-0.5,50.5);
+      hbetat = new TH1D(Form("hbetat%s",pairname), Form("hbetat%s",pairname), 100, 0.0, 1.0);
+      hkt    = new TH1D(Form("hkt%s",pairname),    Form("hkt%s",pairname)  , 100, 0.0, 1.2);
+      hevmult = new TH1D(Form("hevmult%s",pairname),Form("hevmult%s",pairname),1001,-0.5,1000.5);
+      hevmultAll = new TH1D(Form("hevmultAll%s",pairname),Form("hevmultAll%s",pairname),1001,-0.5,1000.5);
+      hevmultPID = new TH2F(Form("hevmultPID%s",pairname),Form("hevmultPID%s",pairname),11,0,11,51,-0.5,50.5);
       hevmultPID->GetXaxis()->SetBinLabel(1,"Pi+");
       hevmultPID->GetXaxis()->SetBinLabel(2,"Pi-");
       hevmultPID->GetXaxis()->SetBinLabel(3,"Pi0");
@@ -640,29 +662,29 @@ int main(int argc, char **argv)
       hevmultPID->GetXaxis()->SetBinLabel(9,"A#Lambda");
       hevmultPID->GetXaxis()->SetBinLabel(10,"K0+");
       hevmultPID->GetXaxis()->SetBinLabel(11,"K0-");
-      heta = new TH1D("heta","heta",300,-3,3);
-      hpt = new TH1D("hpt","hpt",ptmax1*50,0,ptmax1);
-      hphiP = new TH1D("hphiP","hphiP",200,-TMath::Pi(),TMath::Pi());
-      hphiS = new TH1D("hphiS","hphiS",200,-TMath::Pi(),TMath::Pi());
-      hpid1 = new TH1D("hpid1","hpid from GENBOD",6247,-3123,3123);
-      hpid2 = new TH1D("hpid2","hpid for TPI",6247,-3123,3123);
+      heta = new TH1D(Form("heta%s",pairname),Form("heta%s",pairname),300,-3,3);
+      hpt = new TH1D(Form("hpt%s",pairname),Form("hpt%i",pairtype),ptmax1*50,0,ptmax1);
+      hphiP = new TH1D(Form("hphiP%s",pairname),Form("hphiP%i",pairtype),200,-TMath::Pi(),TMath::Pi());
+      hphiS = new TH1D(Form("hphiS%s",pairname),Form("hphiS%s",pairname),200,-TMath::Pi(),TMath::Pi());
+      hpid1 = new TH1D(Form("hpid1%s",pairname),Form("hpid from GENBOD %s",pairname),6247,-3123,3123);
+      hpid2 = new TH1D(Form("hpid2%s",pairname),Form("hpid for TPI %s",pairname),6247,-3123,3123);
 
       const int XBINS = 35; // orig = 80
       const double XMAX = 2.; // orig = 0.8
 
       // Spherical harmonics correlation function
-      ExpCFSH *cylm = new ExpCFSH("NonIdCYlm", XBINS, 0.0, XMAX);
-      ExpCFSH *cylmtrue = new ExpCFSH("NonIdCYlmTrue", XBINS, 0.0, XMAX);
+      ExpCFSH *cylm = new ExpCFSH(Form("NonIdCYlm%s",pairname), XBINS, 0.0, XMAX);
+      ExpCFSH *cylmtrue = new ExpCFSH(Form("NonIdCYlmTrue%s",pairname), XBINS, 0.0, XMAX);
 
       // Spherical harmonics correlation function
-      ExpCFSH *cylml = new ExpCFSH("IdLCYlm", XBINS, 0.0, XMAX);
-      ExpCFSH *cylmltrue = new ExpCFSH("IdLCYlmTrue", XBINS, 0.0, XMAX);
+      ExpCFSH *cylml = new ExpCFSH(Form("IdLCYlm%s",pairname), XBINS, 0.0, XMAX);
+      ExpCFSH *cylmltrue = new ExpCFSH(Form("IdLCYlmTrue%s",pairname), XBINS, 0.0, XMAX);
 
       // DetaDPhi correlation function
-      ExpCFEP *cep = new ExpCFEP("NonIdEP", XBINS, XBINS);
-      ExpCFEP *ceptrue = new ExpCFEP("NonIdEPTrue", XBINS, XBINS);
-      ExpCFEP *cepNoQS = new ExpCFEP("NonIdEPNoQS", XBINS, XBINS);
-      ExpCFEP *ceptrueNoQS = new ExpCFEP("NonIdEPTrueNoQS", XBINS, XBINS);
+      ExpCFEP *cep = new ExpCFEP(Form("NonIdEP%s",pairname), XBINS, XBINS);
+      ExpCFEP *ceptrue = new ExpCFEP(Form("NonIdEPTrue%s",pairname), XBINS, XBINS);
+      ExpCFEP *cepNoQS = new ExpCFEP(Form("NonIdEPNoQS%s",pairname), XBINS, XBINS);
+      ExpCFEP *ceptrueNoQS = new ExpCFEP(Form("NonIdEPTrueNoQS%s",pairname), XBINS, XBINS);
       phiLow = (-(int)(XBINS/4)+0.5)*2.*TMath::Pi()/XBINS;
       phiUp = 2*TMath::Pi()+(-(int)(XBINS/4)+0.5)*2.*TMath::Pi()/XBINS;
 
@@ -769,9 +791,9 @@ int main(int argc, char **argv)
 	    }
 	}
       Int_t* tEventStart = new Int_t[eviterAll];
-      hevweight = new TH1D("hevweight","hevweight",eviterAll+1,-0.5,eviterAll+0.5);
-      hevweightdensity = new TH1D("hevweightdensity","hevweightdensity",eviterAll+1,-0.5,eviterAll+0.5);
-      hevweighttaken = new TH1D("hevweighttaken","hevweighttaken",eviterAll+1,-0.5,eviterAll+0.5);
+      hevweight = new TH1D(Form("hevweight%s",pairname),Form("hevweight%s",pairname),eviterAll+1,-0.5,eviterAll+0.5);
+      hevweightdensity = new TH1D(Form("hevweightdensity%s",pairname),Form("hevweightdensity%s",pairname),eviterAll+1,-0.5,eviterAll+0.5);
+      hevweighttaken = new TH1D(Form("hevweighttaken%s",pairname),Form("hevweighttaken%s",pairname),eviterAll+1,-0.5,eviterAll+0.5);
       eviterAll =0;
 
       /// STEP 2: create cumulative distr. fnc., save event start point and length

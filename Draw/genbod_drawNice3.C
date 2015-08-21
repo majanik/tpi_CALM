@@ -23,14 +23,14 @@ int genbod_drawNice3(const char* filename1, const char* filename2, const char* f
   TH2D* denC2 = ((TH2D*) f2->Get("cdenepNonIdEPTrue"));
   TH2D* denC3 = ((TH2D*) f3->Get("cdenepNonIdEPTrue"));
 
-  double eta = 1.1;
-  gStyle->SetOptStat(000);//111);
+  double eta = 1.5;
+  gStyle->SetOptStat(111);
 
   int drawDifference = 0;
 
-  const char* first = "global (K+K-)";//Cons. laws only";
-  const char* second = "minijets";//Minijets";
-  const char* third = "minijetsLocal";//Minijets";
+  const char* first = "global (pi+pi+)";//Cons. laws only";
+  const char* second = "global (pi+pi-)";//minijets";//Minijets";
+  const char* third = "global (pi0pi0)";//minijetsLocal";//Minijets";
   int drawWhich = 0; // 0 - cons. laws, 1 - femto, 2 - full corr fun
 
   //TCanvas* canv = new TCanvas("canv", "GENBOD results", 10,10,800,600);
@@ -100,15 +100,15 @@ int genbod_drawNice3(const char* filename1, const char* filename2, const char* f
     canv->cd(1);
     TH2D* corrB1 = (TH2D*) numB1->Clone();
     corrB1->Draw("surf1");
-    DrawNicely(corrB1, 0.7,2.4, first);//filename1);
+    DrawNicely(corrB1, 0.85,1.1, first);//filename1);
     canv->cd(2);
     TH2D* corrB2 = (TH2D*) numB2->Clone();
     corrB2->Draw("surf1");
-    DrawNicely(corrB2, 0.7,2.4, second);//filename2);
+    DrawNicely(corrB2, 0.85,1.1, second);//filename2);
     canv->cd(3);
     TH2D* corrB3 = (TH2D*) numB3->Clone();
     corrB3->Draw("surf1");
-    DrawNicely(corrB3, 0.7,2.4, third);//filename2);
+    DrawNicely(corrB3, 0.85,1.1, third);//filename2);
     if(drawDifference){
       canv->cd(4);
       numB2->Divide(numB3);
