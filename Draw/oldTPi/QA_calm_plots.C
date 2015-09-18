@@ -1,21 +1,21 @@
-int QA_calm_plots(const char* filename1, const char* type = "PipPip", bool ifSave = false)
+int QA_calm_plots(const char* filename1, bool ifSave = false)
 {
   
   TFile* f1 = new TFile(filename1,"READ");
  
-  TH2F* hevmultPID = ((TH2F*) f1->Get(Form("hevmultPID%s",type)));
+  TH2F* hevmultPID = ((TH2F*) f1->Get("hevmultPID"));
 
-  TH1D* heta  =  ((TH1D*) f1->Get(Form("heta%s",type)));
-  TH1D* hpt   =  ((TH1D*) f1->Get(Form("hpt%s",type)));
-  TH1D* hphiS =  ((TH1D*) f1->Get(Form("hphiS%s",type)));
-  TH1D* hphiP =  ((TH1D*) f1->Get(Form("hphiP%s",type)));
-  TH1D* hpid1 =  ((TH1D*) f1->Get(Form("hpid1%s",type)));
-  TH1D* hpid2 =  ((TH1D*) f1->Get(Form("hpid2%s",type)));
-  TH1D* hevmultAll = ((TH1D*) f1->Get(Form("hevmultAll%s",type)));
-  TH1D* hevmult = ((TH1D*) f1->Get(Form("hevmult%s",type)));
-  TH1D* hevweight = ((TH1D*) f1->Get(Form("hevweight%s",type)));
-  TH1D* hevweighttaken = ((TH1D*) f1->Get(Form("hevweighttaken%s",type)));
-  TH1D* hevweightdensity= ((TH1D*) f1->Get(Form("hevweightdensity%s",type)));
+  TH1D* heta  =  ((TH1D*) f1->Get("heta"));
+  TH1D* hpt   =  ((TH1D*) f1->Get("hpt"));
+  TH1D* hphiS =  ((TH1D*) f1->Get("hphiS"));
+  TH1D* hphiP =  ((TH1D*) f1->Get("hphiP"));
+  TH1D* hpid1 =  ((TH1D*) f1->Get("hpid1"));
+  TH1D* hpid2 =  ((TH1D*) f1->Get("hpid2"));
+  TH1D* hevmultAll = ((TH1D*) f1->Get("hevmultAll"));
+  TH1D* hevmult = ((TH1D*) f1->Get("hevmult"));
+  TH1D* hevweight = ((TH1D*) f1->Get("hevweight"));
+  TH1D* hevweighttaken = ((TH1D*) f1->Get("hevweighttaken"));
+  TH1D* hevweightdensity= ((TH1D*) f1->Get("hevweightdensity"));
 
 
   int rebin = 2;

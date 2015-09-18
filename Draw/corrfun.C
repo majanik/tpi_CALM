@@ -1,71 +1,38 @@
-int genbod(char* infile = "/media/wfpw/ElemExt1/CALM/FINAL_SEPT_MJ/tpi_ReggaeGlobal/outfilecf202p.CALM_FinalSeptMJ_reggaeGlobal_10_18.root.1", char* type ="PipPip", bool ifSave = false)
+int corrfun(char* infile = "/media/wfpw/ElemExt1/CALM/FINAL_SEPT_MJ/tpi_Reggae/CALM_FinalSeptMJ_reggaeGlobal_10_18.root", char* type ="PipPim", bool ifSave = false)
 {
 
   TFile* f1 = new TFile(infile,"READ");
 
 
-  double eta = 1.1;
-  gStyle->SetOptStat(111);
-  TCanvas* canv = new TCanvas("canv", "GENBOD results", 10,10,1600,1200);
-  canv->Divide(2,2);
-  TCanvas* canvND = new TCanvas("canvND", "liczniki i mianowniki ", 10,10,1600,1200);
-  canvND->Divide(2,2);
-  //////   Pure Corr fun
+  double eta = 1.5;
+  gStyle->SetOptStat(000);
+  TCanvas* canv = new TCanvas("canv", "GENBOD results", 10,10,600,400);
+
   TH2D* numF = ((TH2D*)f1->Get(Form("cnumepNonIdEP%s",type)))->Clone();
-  canvND->cd(1); numF->DrawCopy("surf1");
   TH2D* denF =  ((TH2D*) f1->Get(Form("cdenepNonIdEP%s",type)));
-  // numF->Rebin2D(2,2);
-  // denF->Rebin2D(2,2);
-  canvND->cd(2); denF->DrawCopy("surf1");
-  double sF = numF->GetEntries()/denF->GetEntries();
-  numF->Divide(denF);
-  numF->Scale(1./sF);
-  numF->GetYaxis()->SetRangeUser(-eta,eta);
-  // numF->GetZaxis()->SetRangeUser(0.97,1.2);
-  canv->cd(1);
-  DrawNicely(numF, 0,0, "Femtoscopic component");
-  numF->Draw("surf1");
-  
+
 
   ////// Pure Bkg
   TH2D* numB = ((TH2D*) f1->Get(Form("cnumepNonIdEPTrue%s",type)));
-  canvND->cd(3);
   TH2D* denB = ((TH2D*) numF->Clone());
   // numB->Rebin2D(2,2);
   // denB->Rebin2D(2,2);
-  numB->DrawCopy("surf1");
   double sB = numB->GetEntries()/denB->GetEntries();
   numB->Divide(denB);
   numB->Scale(1./sB);
   numB->GetYaxis()->SetRangeUser(-eta,eta);
-  //numB->GetZaxis()->SetRangeUser(0.97,1.2);
-  canv->cd(2);
-  DrawNicely(numB, 0,0, "Background component");
+  numB->GetZaxis()->SetRangeUser(0.89,1.3);
+  DrawNicely(numB, 0,0, "");
   numB->DrawCopy("surf1");
-
-  //////   Norm Corr fun
-  TH2D* numC =((TH2D*) numB->Clone());
-  TH2D* denC = ((TH2D*) f1->Get(Form("cdenepNonIdEPTrue%s",type)));
-  // numC->Rebin2D(2,2);
-  // denC->Rebin2D(2,2);
-  canvND->cd(4); denC->DrawCopy("surf1");
-  double sC = numC->GetEntries()/denC->GetEntries();
-  numC->Divide(denC);
-  numC->Scale(1./sC);
-  numC->GetYaxis()->SetRangeUser(-eta,eta);
-  // numC->GetZaxis()->SetRangeUser(0.97,1.2);
-  canv->cd(3);
-  DrawNicely(numC, 0,0, "Correlation function");
-  numC->DrawCopy("surf1");
-  
+ 
   //save
-  if (ifSave)
-  {
-    char* name="";
-    strncpy(name,_file0->GetName(),strlen(_file0->GetName())-0);
-    canv->Print(Form("%s_global.png",name));
-    canvND->Print(Form("%s_global_NumDen.png",name));
-  }
+  // if (ifSave)
+  // {
+  //   char* name="";
+  //   strncpy(name,_file0->GetName(),strlen(_file0->GetName())-0);
+  //   canv->Print(Form("%s_global.png",name));
+  //   canvND->Print(Form("%s_global_NumDen.png",name));
+  // }
 }
 
 void DrawNicely (TH2D *num, double minC=0, double maxC=0, char* title="")
@@ -102,7 +69,7 @@ void DrawNicely (TH2D *num, double minC=0, double maxC=0, char* title="")
 	if(minC!=maxC) num->GetZaxis()->SetRangeUser(minC,maxC);
 	num->GetXaxis()->SetTitle("#Delta#varphi");
 	num->GetYaxis()->SetTitle("#Delta#eta");
-	num->GetZaxis()->SetTitle("C(#Delta#eta#Delta#phi)");
+	num->GetZaxis()->SetTitle("C(#Delta#eta,#Delta#varphi)");
 	num->SetTitle(title);
 	num->SetTitleSize(0.07);
 }

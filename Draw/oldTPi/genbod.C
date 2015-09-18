@@ -1,9 +1,5 @@
-int genbod(char* infile = "/media/wfpw/ElemExt1/CALM/FINAL_SEPT_MJ/tpi_ReggaeGlobal/outfilecf202p.CALM_FinalSeptMJ_reggaeGlobal_10_18.root.1", char* type ="PipPip", bool ifSave = false)
+int genbod(bool ifSave = false)
 {
-
-  TFile* f1 = new TFile(infile,"READ");
-
-
   double eta = 1.1;
   gStyle->SetOptStat(111);
   TCanvas* canv = new TCanvas("canv", "GENBOD results", 10,10,1600,1200);
@@ -11,9 +7,9 @@ int genbod(char* infile = "/media/wfpw/ElemExt1/CALM/FINAL_SEPT_MJ/tpi_ReggaeGlo
   TCanvas* canvND = new TCanvas("canvND", "liczniki i mianowniki ", 10,10,1600,1200);
   canvND->Divide(2,2);
   //////   Pure Corr fun
-  TH2D* numF = ((TH2D*)f1->Get(Form("cnumepNonIdEP%s",type)))->Clone();
+  TH2D* numF = (TH2D*)cnumepNonIdEP->Clone();
   canvND->cd(1); numF->DrawCopy("surf1");
-  TH2D* denF =  ((TH2D*) f1->Get(Form("cdenepNonIdEP%s",type)));
+  TH2D* denF = (TH2D*)cdenepNonIdEP;
   // numF->Rebin2D(2,2);
   // denF->Rebin2D(2,2);
   canvND->cd(2); denF->DrawCopy("surf1");
@@ -26,11 +22,10 @@ int genbod(char* infile = "/media/wfpw/ElemExt1/CALM/FINAL_SEPT_MJ/tpi_ReggaeGlo
   DrawNicely(numF, 0,0, "Femtoscopic component");
   numF->Draw("surf1");
   
-
   ////// Pure Bkg
-  TH2D* numB = ((TH2D*) f1->Get(Form("cnumepNonIdEPTrue%s",type)));
+  TH2D* numB = (TH2D*)cnumepNonIdEPTrue->Clone();
   canvND->cd(3);
-  TH2D* denB = ((TH2D*) numF->Clone());
+  TH2D* denB = (TH2D*)cnumepNonIdEP;
   // numB->Rebin2D(2,2);
   // denB->Rebin2D(2,2);
   numB->DrawCopy("surf1");
@@ -44,8 +39,8 @@ int genbod(char* infile = "/media/wfpw/ElemExt1/CALM/FINAL_SEPT_MJ/tpi_ReggaeGlo
   numB->DrawCopy("surf1");
 
   //////   Norm Corr fun
-  TH2D* numC =((TH2D*) numB->Clone());
-  TH2D* denC = ((TH2D*) f1->Get(Form("cdenepNonIdEPTrue%s",type)));
+  TH2D* numC = (TH2D*)cnumepNonIdEPTrue;
+  TH2D* denC = (TH2D*)cdenepNonIdEPTrue;
   // numC->Rebin2D(2,2);
   // denC->Rebin2D(2,2);
   canvND->cd(4); denC->DrawCopy("surf1");
