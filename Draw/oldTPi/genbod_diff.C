@@ -1,25 +1,22 @@
 int genbod_diff(const char* filename1, const char* filename2, bool ifSave = false)
 {
-  char* type1="KpKp";
-  char* type2="";
-
   TFile* f1 = new TFile(filename1,"READ");
   TFile* f2 = new TFile(filename2,"READ");
 
-  TH2D* numF1 = ((TH2D*) f1->Get(Form("cnumepNonIdEPNoQS%s",type1)));
-  TH2D* numF2 = ((TH2D*) f2->Get(Form("cnumepNonIdEPNoQS%s",type2)));
-  TH2D* denF1 = ((TH2D*) f1->Get(Form("cdenepNonIdEPNoQS%s",type1)));
-  TH2D* denF2 = ((TH2D*) f2->Get(Form("cdenepNonIdEPNoQS%s",type2)));
-  TH2D* numB1 = ((TH2D*) f1->Get(Form("cnumepNonIdEPTrueNoQS%s",type1)));
-  TH2D* numB2 = ((TH2D*) f2->Get(Form("cnumepNonIdEPTrueNoQS%s",type2)));
+  TH2D* numF1 = ((TH2D*) f1->Get("cnumepNonIdEP"));
+  TH2D* numF2 = ((TH2D*) f2->Get("cnumepNonIdEP"));
+  TH2D* denF1 = ((TH2D*) f1->Get("cdenepNonIdEP"));
+  TH2D* denF2 = ((TH2D*) f2->Get("cdenepNonIdEP"));
+  TH2D* numB1 = ((TH2D*) f1->Get("cnumepNonIdEPTrue"));
+  TH2D* numB2 = ((TH2D*) f2->Get("cnumepNonIdEPTrue"));
   TH2D* denB1 = ((TH2D*) numF1->Clone());
   TH2D* denB2 = ((TH2D*) numF2->Clone());
   TH2D* numC1 = ((TH2D*) numB1->Clone());
   TH2D* numC2 = ((TH2D*) numB2->Clone());
-  TH2D* denC1 = ((TH2D*) f1->Get(Form("cdenepNonIdEPTrueNoQS%s",type1)));
-  TH2D* denC2 = ((TH2D*) f2->Get(Form("cdenepNonIdEPTrueNoQS%s",type2)));
+  TH2D* denC1 = ((TH2D*) f1->Get("cdenepNonIdEPTrue"));
+  TH2D* denC2 = ((TH2D*) f2->Get("cdenepNonIdEPTrue"));
 
-  double eta = 1.6;
+  double eta = 1.1;
   gStyle->SetOptStat(111);
   //TCanvas* canv = new TCanvas("canv", "GENBOD results", 10,10,800,600);
    TCanvas* canv = new TCanvas("canv", "GENBOD results", 10,10,1600,1200);

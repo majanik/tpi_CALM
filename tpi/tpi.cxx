@@ -582,6 +582,7 @@ int main(int argc, char **argv)
       TH1D *hphiS;
       TH1D *hpid1;
       TH1D *hpid2;
+      TH1D *hptTotal;
 
       ExpCF3D *cf3da;
       ExpCF3D *cf3dac;
@@ -589,24 +590,25 @@ int main(int argc, char **argv)
       ExpCF3D *cf3dactrue;
 
       char pairname[20];
-      if(pairtype==0)
-	strcpy(pairname,"PipPip");
-      else if(pairtype==16)
-	strcpy(pairname,"PipPim");
-      else if(pairtype==22)
-	strcpy(pairname,"PimPim");
-      else if(pairtype==21)
-	strcpy(pairname,"Pi0Pi0");
-      else if(pairtype==1)
-	strcpy(pairname,"KpKp");
-      else if(pairtype==19)
-	strcpy(pairname,"KpKm");
-      else  if(pairtype==4)
-	strcpy(pairname,"PP");
-      else  if(pairtype==20)
-	strcpy(pairname,"aPaP");
-      else if(pairtype==17)
-	strcpy(pairname,"LL");
+      int pdgpart1 = 0;
+      if(pairtype==0){
+	strcpy(pairname,"PipPip"); pdgpart1=211;}
+      else if(pairtype==16){
+	strcpy(pairname,"PipPim"); pdgpart1=211;}
+      else if(pairtype==22){
+	strcpy(pairname,"PimPim"); pdgpart1=-211;}
+      else if(pairtype==21){
+	strcpy(pairname,"Pi0Pi0"); pdgpart1=111;}
+      else if(pairtype==1){
+	strcpy(pairname,"KpKp"); pdgpart1=321;}
+      else if(pairtype==19){
+	strcpy(pairname,"KpKm"); pdgpart1=321;}
+      else  if(pairtype==12){
+	strcpy(pairname,"PP"); pdgpart1=2212;}
+      else  if(pairtype==20){
+	strcpy(pairname,"PaP"); pdgpart1=2212;}
+      else if(pairtype==17){
+	strcpy(pairname,"LL"); pdgpart1=3122;}
       else
 	strcpy(pairname,"NoName");
 
@@ -664,6 +666,7 @@ int main(int argc, char **argv)
       hevmultPID->GetXaxis()->SetBinLabel(11,"K0-");
       heta = new TH1D(Form("heta%s",pairname),Form("heta%s",pairname),300,-3,3);
       hpt = new TH1D(Form("hpt%s",pairname),Form("hpt%i",pairtype),ptmax1*50,0,ptmax1);
+      hptTotal = new TH1D(Form("hptTotal%s",pairname),Form("hptTotal%i",pairtype),ptmax1*50,0,ptmax1);
       hphiP = new TH1D(Form("hphiP%s",pairname),Form("hphiP%i",pairtype),200,-TMath::Pi(),TMath::Pi());
       hphiS = new TH1D(Form("hphiS%s",pairname),Form("hphiS%s",pairname),200,-TMath::Pi(),TMath::Pi());
       hpid1 = new TH1D(Form("hpid1%s",pairname),Form("hpid from GENBOD %s",pairname),6247,-3123,3123);
@@ -778,6 +781,7 @@ int main(int argc, char **argv)
       int partcountLambdasMinus = 0;
       int partcountKaon0Plus = 0;
       int partcountKaon0Minus = 0;
+      double totalPt = 0;
       int sw = 0;
 
       /// STEP 1: calculate events number, create all histograms/arrays
@@ -822,14 +826,16 @@ int main(int argc, char **argv)
 	chn->GetEntry(iter);
 	//chnReplaced->GetEntry(iter);
 
-	if (dosourcemon) {
-	  if ((buf.pid == 211) || (buf.pid==-211)  || (buf.pid == 321) || (buf.pid==-321) || (buf.pid == 2212) || (buf.pid==-2212)) {
+	
+	// if (dosourcemon) {
+	//   if ((buf.pid == 211) || (buf.pid==-211)  || (buf.pid == 321) || (buf.pid==-321) || (buf.pid == 2212) || (buf.pid==-2212)) {
+	//     peta = -TMath::Log(TMath::Tan(TMath::ATan2(pt, buf.pz)/2.0));
+	//     //if (TMath::Abs(peta)<ETAABS)
+	//   }
+	// }
 
-	    peta = -TMath::Log(TMath::Tan(TMath::ATan2(pt, buf.pz)/2.0));
-	    if (TMath::Abs(peta)<ETAABS)
-	      partcountev++;
-	  }
-	}
+	if(buf.pid==pdgpart1) partcountev++;
+
 	if(buf.pid == PIPID)
 	  partcountPionsPlus++; 
 	if(buf.pid == -PIPID)
@@ -854,6 +860,7 @@ int main(int argc, char **argv)
 	  partcountKaon0Minus++;
 
 	partcountevAll++;
+	totalPt+=sqrt(buf.px*buf.px+buf.py*buf.py+buf.pz*buf.pz);
 	hpid2->Fill(buf.pid);
 
 	//    cout << "Found pid " << buf.pid << " " << buf.eventid << endl;
@@ -933,6 +940,8 @@ int main(int argc, char **argv)
 	  hevmultPID->Fill(9.5,partcountKaon0Plus);
 	  hevmultPID->Fill(10.5,partcountKaon0Minus);
 
+	  hptTotal->Fill(totalPt);
+
 	  partcountev = 0;
 	  partcountevAll = 0;
 	  partcountPionsPlus = 0;
@@ -946,6 +955,7 @@ int main(int argc, char **argv)
 	  partcountLambdasMinus = 0;
 	  partcountKaon0Plus = 0;
 	  partcountKaon0Minus=0;
+	  totalPt = 0;
 
 	  //	  cout << "Mix event with " << endl;
 	  
@@ -1354,6 +1364,7 @@ int main(int argc, char **argv)
       hpid2->Write();
       hevmultAll->Write();
       hevmultPID->Write();
+      hptTotal->Write();
 
       if (dosourcemon)
 	hevmult->Write();
