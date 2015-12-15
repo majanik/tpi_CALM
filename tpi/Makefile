@@ -1,12 +1,14 @@
 CC	= g++
 LD	= g++
 
-CFLAGS	= `root-config --cflags` -O3 -g -I../SphericalHarmonics -I/home/wfpw/CERN/CALM/CALM/include
+CALM_PATH = ${HOME}/CERN/CALM/CALM
+CFLAGS	= `root-config --cflags` -O3 -g -I../SphericalHarmonics -I${CALM_PATH}/include
 LDFLAGS = `root-config --libs` -g -lgsl -lgslcblas
+
 
 all: tpi
 
-tpi: tpi.o PairReader.o PairWeight.o ExpCF3D.o ExpCF1D.o ExpCFSH.o ExpCFEP.o SourceMonitor.o TChainProxy.o ../SphericalHarmonics/ylm.o ../SphericalHarmonics/CorrFctnDirectYlm.o /home/wfpw/CERN/CALM/CALM/obj/ParticleCoor.o
+tpi: tpi.o PairReader.o PairWeight.o ExpCF3D.o ExpCF1D.o ExpCFSH.o ExpCFEP.o SourceMonitor.o TChainProxy.o ../SphericalHarmonics/ylm.o ../SphericalHarmonics/CorrFctnDirectYlm.o ${CALM_PATH}/build/CMakeFiles/calm.dir/src/ParticleCoor.cxx.o
 	$(LD) $^ -o $@ $(LDFLAGS)
 
 %.o: %.cxx
