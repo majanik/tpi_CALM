@@ -28,9 +28,9 @@ int genbod(char* infile = "/media/wfpw/ElemExt1/CALM/FINAL_SEPT_MJ/tpi_ReggaeGlo
   
 
   ////// Pure Bkg
-  TH2D* numB = ((TH2D*) f1->Get(Form("cnumepNonIdEPTrue%s",type)));
+  TH2D* numB = ((TH2D*) f1->Get(Form("cnumepNonIdEPTrueNoQS%s",type)));
   canvND->cd(3);
-  TH2D* denB = ((TH2D*) numF->Clone());
+  TH2D* denB = ((TH2D*) f1->Get(Form("cdenepNonIdEPNoQS%s",type)));
   // numB->Rebin2D(2,2);
   // denB->Rebin2D(2,2);
   numB->DrawCopy("surf1");

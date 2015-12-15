@@ -781,6 +781,7 @@ int main(int argc, char **argv)
       int partcountLambdasMinus = 0;
       int partcountKaon0Plus = 0;
       int partcountKaon0Minus = 0;
+      double totalPt = 0;
       int sw = 0;
 
       /// STEP 1: calculate events number, create all histograms/arrays
@@ -825,8 +826,7 @@ int main(int argc, char **argv)
 	chn->GetEntry(iter);
 	//chnReplaced->GetEntry(iter);
 
-	double totalPt = 0;
-
+	
 	// if (dosourcemon) {
 	//   if ((buf.pid == 211) || (buf.pid==-211)  || (buf.pid == 321) || (buf.pid==-321) || (buf.pid == 2212) || (buf.pid==-2212)) {
 	//     peta = -TMath::Log(TMath::Tan(TMath::ATan2(pt, buf.pz)/2.0));
@@ -860,7 +860,7 @@ int main(int argc, char **argv)
 	  partcountKaon0Minus++;
 
 	partcountevAll++;
-	totalPt+=sqrt(pt*pt+buf.pz*buf.pz);
+	totalPt+=sqrt(buf.px*buf.px+buf.py*buf.py+buf.pz*buf.pz);
 	hpid2->Fill(buf.pid);
 
 	//    cout << "Found pid " << buf.pid << " " << buf.eventid << endl;
@@ -955,6 +955,7 @@ int main(int argc, char **argv)
 	  partcountLambdasMinus = 0;
 	  partcountKaon0Plus = 0;
 	  partcountKaon0Minus=0;
+	  totalPt = 0;
 
 	  //	  cout << "Mix event with " << endl;
 	  

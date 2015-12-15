@@ -93,6 +93,8 @@ int QA_calm_plots_diff(const char* filename1, const char* filename2, const char*
   hpt->GetXaxis()->SetRangeUser(0,5);
   hpt->Draw();
   hpt2->Draw("same");
+  hptTotal->SetLineColor(kMagenta);
+  hptTotal->Draw("same");
 
   canv->cd(3);
   hphiS->Draw();
